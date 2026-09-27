@@ -1,46 +1,55 @@
-# Stroke Prediction — ML Pipeline (Portfolio Sample)
+# Stroke Classification: a scikit-learn Pipeline Example
 
-A **clean, reproducible** scikit-learn pipeline for binary classification on a stroke dataset.
-This repo is designed as a professional portfolio example: clear preprocessing, class imbalance handling,
-model comparison, and publication-quality evaluation figures.
+An executed tabular classification example demonstrating preprocessing, imbalanced-class evaluation
+and model selection. The included **200-row synthetic CSV** is for software demonstration;
+its metrics do not establish stroke prediction performance on patient data.
 
-## What this demonstrates
-- Reproducible **ML pipeline** with `ColumnTransformer` (numeric/one-hot)
-- **Imputation** (median/most_frequent) and **scaling**
-- Class imbalance handling via `class_weight='balanced'`
-- **Modeling:** Logistic Regression, Random Forest
-- **Evaluation:** ROC-AUC, PR-AUC, confusion matrix, classification report
-- **Interpretability:** feature importances (RF) and permutation importance
+## Workflow
 
-## Repo Structure
-```
-.
-├── notebooks
-│   └── stroke_pipeline.ipynb
-├── data
-│   └── sample.csv               # Tiny demo CSV (columns similar to popular stroke datasets)
-├── README.md
-├── requirements.txt
-├── LICENSE
-└── .gitignore
-```
+1. Reserve a stratified 25% test split before model selection.
+2. Use a ColumnTransformer for numeric imputation/scaling and categorical imputation/one-hot encoding.
+3. Compare class-weighted logistic regression and random forest with up to five stratified cross-validation folds
+   on the training split (five for the included demo). Preprocessing is fitted inside each fold.
+4. Select the model by mean cross-validation **average precision** and evaluate it on the reserved test split.
+5. Report average precision, ROC-AUC, a precision–recall curve, a confusion matrix and a classification report.
+6. Inspect permutation importance of the original input columns as a diagnostic of the selected model.
 
-## Using your dataset
-1. Place your full dataset CSV as `data/stroke.csv` with columns similar to:
-   - `id, gender, age, hypertension, heart_disease, ever_married, work_type, Residence_type, avg_glucose_level, bmi, smoking_status, stroke`
-2. Open `notebooks/stroke_pipeline.ipynb` and set `use_demo = False` to load `data/stroke.csv`.
-3. Run all cells.
+Average precision is the scikit-learn metric used here; it is not a trapezoidal integral under
+the precision–recall curve. Test-set permutation importance is descriptive and should not be used
+to select features or tune the model while continuing to call that set an untouched final evaluation.
 
-> Note: The repo includes a tiny synthetic `sample.csv` so the notebook runs instantly. For real results, use your dataset.
+## Files and data
 
-## Quickstart
+- [notebooks/stroke_pipeline.ipynb](notebooks/stroke_pipeline.ipynb): executed workflow and figures.
+- [data/sample.csv](data/sample.csv): synthetic example, not patient records.
+- [requirements.txt](requirements.txt): notebook dependencies.
+
+For your own dataset, place a CSV at `data/stroke.csv` and set `use_demo = False` in the notebook.
+Expected columns include `gender`, `age`, `hypertension`, `heart_disease`, `ever_married`,
+`work_type`, `Residence_type`, `avg_glucose_level`, `bmi`, `smoking_status` and binary target `stroke`.
+An optional `id` column is excluded from predictors. Check label quality and ensure enough examples
+of both classes for the split and cross-validation. Repeated patients or time-dependent observations
+require a suitable group or temporal split instead of this independent-row demonstration.
+
+## Run locally
+
+From the repository folder, create a separate environment:
+
 ```bash
 python -m venv .venv
-# Windows: .venv\Scripts\activate
-# Linux/Mac: source .venv/bin/activate
-pip install -r requirements.txt
+```
+
+Activate with `.venv\Scripts\activate` in Windows Command Prompt or
+`source .venv/bin/activate` on Linux/macOS, then run:
+
+```bash
+python -m pip install -r requirements.txt
 jupyter notebook notebooks/stroke_pipeline.ipynb
 ```
 
+The saved notebook contains outputs from the synthetic example. Performance on another dataset,
+calibration, subgroup behavior and prospective clinical usefulness have not been established.
+
 ## License
-MIT
+
+MIT — see [LICENSE](LICENSE).
