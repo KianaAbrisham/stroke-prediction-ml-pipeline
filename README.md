@@ -50,6 +50,10 @@ jupyter notebook notebooks/stroke_pipeline.ipynb
 The saved notebook contains outputs from the synthetic example. Performance on another dataset,
 calibration, subgroup behavior and prospective clinical usefulness have not been established.
 
+## About this example
+
+The workflow was revised and executed with AI coding assistance. Its purpose is to demonstrate how preprocessing, cross-validation, and average-precision-based selection fit together when the positive class is uncommon. The supplied data are synthetic, and the recorded outputs cover that demonstration.
+
 ## License
 
 MIT — see [LICENSE](LICENSE).
