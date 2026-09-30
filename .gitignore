@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+runs/
+outputs/
+.DS_Store
+
+# Keep the bundled example; exclude local research datasets.
+data/*.csv
+!data/sample.csv

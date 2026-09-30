@@ -33,7 +33,7 @@ require a suitable group or temporal split instead of this independent-row demon
 
 ## Run locally
 
-From the repository folder, create a separate environment:
+Use Python 3.12. From the repository folder, create a separate environment:
 
 ```bash
 python -m venv .venv
@@ -50,9 +50,7 @@ jupyter notebook notebooks/stroke_pipeline.ipynb
 The saved notebook contains outputs from the synthetic example. Performance on another dataset,
 calibration, subgroup behavior and prospective clinical usefulness have not been established.
 
-## About this example
-
-The workflow was revised and executed with AI coding assistance. Its purpose is to demonstrate how preprocessing, cross-validation, and average-precision-based selection fit together when the positive class is uncommon. The supplied data are synthetic, and the recorded outputs cover that demonstration.
+[Development notes](https://github.com/KianaAbrisham/KianaAbrisham/blob/main/docs/DEVELOPMENT.md)
 
 ## License
 
